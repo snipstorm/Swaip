@@ -1,0 +1,29 @@
+import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { getQuote } from "./routers/jupiter/swap/quote";
+import { getTransaction } from "./routers/jupiter/swap/transaction";
+import { getTokens } from "./routers/jupiter/tokens";
+import { getTokenPrice } from "./routers/jupiter/tokens/price";
+
+/**
+ * This is the primary router for your server.
+ *
+ * All routers added in /api/routers should be manually added here.
+ */
+export const appRouter = createTRPCRouter({
+  jupiter: {
+    tokens: { getTokens, getTokenPrice },
+    swap: { getQuote, getTransaction },
+  },
+});
+
+// export type definition of API
+export type AppRouter = typeof appRouter;
+
+/**
+ * Create a server-side caller for the tRPC API.
+ * @example
+ * const trpc = createCaller(createContext);
+ * const res = await trpc.post.all();
+ *       ^? Post[]
+ */
+export const createCaller = createCallerFactory(appRouter);
