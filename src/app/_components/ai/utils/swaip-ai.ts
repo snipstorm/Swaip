@@ -25,7 +25,8 @@ export class SwaipAI {
     - Trading Volume: ${data.tradingVolume ?? "N/A"}
     - Mintable: ${data.mintable}
 
-    Provide a concise risk assessment, including insights on the implications of the Jupiter safety tags and the risk data provided.`;
+    Provide a concise risk assessment, including insights on the implications of the Jupiter safety tags and the risk data provided.
+    Be like a teacher and explain to user step by step each risk`;
 
     console.log("Prompt:", prompt);
 
@@ -37,8 +38,24 @@ export class SwaipAI {
     return textStream;
   }
 
-  async respondToQuestion(question: string) {
-    const prompt = `Respond to the following question as Swaip AI, without mentioning your identity as an AI tool: ${question}`;
+  async respondToQuestion(
+    question: string,
+    data: TokenRiskDataType,
+    token: TokenDataType,
+  ) {
+    const prompt = `Respond to the following question as Swaip AI, without mentioning your identity as an AI tool: ${question}.
+    Token data: 
+    - Chain: Solana
+    - Jupiter safety tags: ${token.tags.join(", ") || "N/A"}
+    - Daily Volume: ${token.daily_volume ?? "N/A"}
+    - Symbol & Name: ${token.symbol} | ${token.name}
+    - Address: ${token.address ?? "N/A"}
+    - Freeze Authority: ${token.freeze_authority ?? "N/A"}
+    - Price (USD): ${data.tokenPriceUsd ?? "N/A"}
+    - Market Cap: ${data.marketCap ?? "N/A"}
+    - Total Supply: ${data.totalSupply ?? "N/A"}
+    - Trading Volume: ${data.tradingVolume ?? "N/A"}
+    - Mintable: ${data.mintable}`;
 
     const { textStream } = await streamText({
       model,

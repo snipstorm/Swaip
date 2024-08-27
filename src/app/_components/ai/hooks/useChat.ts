@@ -110,7 +110,14 @@ export const useChat = (
       setMessages((prev) => [...prev, aiMessage]);
 
       try {
-        const textStream = await swaipAI.respondToQuestion(userInput);
+        if (!token) return;
+
+        const data = await fetchTokenRiskData(token);
+        const textStream = await swaipAI.respondToQuestion(
+          userInput,
+          data, // eslint-disable-line
+          token,
+        );
 
         let finalAIMessage = "";
 
