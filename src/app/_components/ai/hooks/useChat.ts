@@ -8,6 +8,7 @@ import { SwaipAI } from "../utils/swaip-ai";
 export const useChat = (
   fetchTokenRiskData: (token: TokenDataType) => Promise<any>, // eslint-disable-line
   token: TokenDataType | null,
+  isBeginnerMode: boolean,
 ) => {
   const [messages, setMessages] = useState<MessagesType[]>([
     {
@@ -59,14 +60,16 @@ export const useChat = (
           });
         }
 
-        setMessages((prev) => [
-          ...prev,
-          {
-            author: "Swaip",
-            message: "Feel free to ask any further questions!",
-          },
-        ]);
-        setChatOpen(true);
+        if (isBeginnerMode) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              author: "Swaip",
+              message: "Feel free to ask any further questions!",
+            },
+          ]);
+          setChatOpen(true);
+        }
       } catch (error) {
         console.error(error);
         setMessages((prev) => {
@@ -83,7 +86,13 @@ export const useChat = (
     };
 
     fetchData(); // eslint-disable-line
-  }, [token]); // eslint-disable-line
+  }, [token, isBeginnerMode]); // eslint-disable-line
+
+  useEffect(() => {
+    if (!isBeginnerMode) {
+      setChatOpen(false);
+    }
+  }, [isBeginnerMode]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
