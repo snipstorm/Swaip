@@ -5,13 +5,14 @@ import type { TokenDataType } from "./types";
 export const getTokens = publicProcedure.query(async () => {
   try {
     const response = await fetch(
-      `https://tokens.jup.ag/tokens_with_markets?tags=verified,community,strict,lst,pump,clone,birdeye-trending`,
+      `https://tokens.jup.ag/tokens/tradable?tags=verified,community,strict,lst,pump,clone,birdeye-trending`,
       {
         next: { tags: ["tokens"] },
         headers: {
           Referer: `https://${process.env.VERCEL_URL ?? "localhost:3000"}`, // Replace with your actual domain
           Origin: `https://${process.env.VERCEL_URL ?? "localhost:3000"}`, // Replace with your actual domain
         },
+        cache: "force-cache",
       },
     );
 
