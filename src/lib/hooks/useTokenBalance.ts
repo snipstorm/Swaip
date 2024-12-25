@@ -15,6 +15,8 @@ const WRAPPED_SOL_MINT = new PublicKey(
 );
 export const REFRESH_INTERVAL = 30000; // 30 seconds
 
+// TODO:
+
 export function useTokenBalance(token: TokenDataType | null) {
   const [balance, setBalance] = useState<Balance | null>(null);
   const [refreshCountdown, setRefreshCountdown] =

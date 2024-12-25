@@ -9,8 +9,8 @@ export const getTokens = publicProcedure.query(async () => {
       {
         next: { tags: ["tokens"] },
         headers: {
-          Referer: `https://${process.env.VERCEL_URL ?? "localhost:3000"}`, // Replace with your actual domain
-          Origin: `https://${process.env.VERCEL_URL ?? "localhost:3000"}`, // Replace with your actual domain
+          Referer: `https://${process.env.VERCEL_URL ?? "localhost:3000"}`,
+          Origin: `https://${process.env.VERCEL_URL ?? "localhost:3000"}`,
         },
         cache: "force-cache",
       },

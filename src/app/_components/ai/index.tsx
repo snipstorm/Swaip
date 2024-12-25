@@ -43,7 +43,7 @@ export default function AI({ token }: Props) {
           <AIMessage
             key={index}
             author={author}
-            message={message} // Simplify message if in beginner mode
+            message={message}
             isLoading={isLoading}
           />
         ))}

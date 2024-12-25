@@ -7,9 +7,7 @@ interface JupiterPriceResponse {
   data: {
     [key: string]: {
       id: string;
-      mintSymbol: string;
-      vsToken: string;
-      vsTokenSymbol: string;
+      type: string;
       price: number;
     };
   };
@@ -19,7 +17,7 @@ export const getTokenPrice = publicProcedure
   .input(z.string())
   .mutation(async ({ input }) => {
     const mintAddress = new PublicKey(input);
-    const url = `https://price.jup.ag/v6/price?ids=${mintAddress.toString()}`;
+    const url = `https://api.jup.ag/price/v2?ids=${mintAddress.toString()}`;
 
     try {
       const response = await fetch(url);
